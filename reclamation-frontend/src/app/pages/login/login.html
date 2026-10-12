@@ -1,0 +1,46 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-gray-50 p-4">
+  <mat-card class="w-full max-w-md p-6 shadow-2xl rounded-2xl border border-gray-200/50 backdrop-blur-sm">
+    <!-- Logo -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-blue-900 to-blue-700 rounded-2xl flex items-center justify-center mb-3 shadow-lg shadow-blue-500/30">
+        <mat-icon class="text-white text-3xl">support_agent</mat-icon>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-800">Gestion Réclamations</h1>
+      <p class="text-sm text-gray-500">Connectez-vous à votre espace</p>
+    </div>
+
+    <!-- Formulaire -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="exemple@domaine.com">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Email requis et valide
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="••••••••">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          Mot de passe requis (min 6 caractères)
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit"
+              class="w-full !bg-blue-900 !text-white py-2 text-lg font-semibold hover:!bg-blue-800 transition-all duration-200 hover:shadow-lg">
+        Se connecter
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 text-sm">
+      <span class="text-gray-600">Pas encore de compte ?</span>
+      <a routerLink="/register" class="text-blue-900 font-medium hover:underline ml-1">Inscrivez-vous</a>
+    </div>
+  </mat-card>
+</div>

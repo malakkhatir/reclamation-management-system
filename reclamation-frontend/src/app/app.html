@@ -1,0 +1,7 @@
+<!-- Navbar tban ghir ila kan l'user connecté -->
+<app-navbar *ngIf="auth.isLoggedIn()"></app-navbar>
+
+<!-- Hada howa l'mkan li tayban fih l'page (Login, Dashboard, ...) -->
+<main class="min-h-screen">
+  <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,88 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <div class="flex flex-wrap justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <mat-icon class="text-blue-900">dashboard</mat-icon>
+        Tableau de bord
+      </h1>
+      <p class="text-sm text-gray-500">Bienvenue sur votre espace client</p>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/client/claims/new"
+            class="!bg-blue-900 !text-white hover:!bg-blue-800 transition-all shadow-lg shadow-blue-500/30">
+      <mat-icon class="mr-1">add_circle</mat-icon>
+      Nouvelle réclamation
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <mat-card class="p-4 border-l-4 border-blue-900 shadow-sm hover:shadow-md transition">
+      <div class="flex items-center">
+        <mat-icon class="text-blue-900 mr-3">description</mat-icon>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Total</p>
+          <p class="text-2xl font-bold">{{ stats.total }}</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="p-4 border-l-4 border-red-500 shadow-sm hover:shadow-md transition">
+      <div class="flex items-center">
+        <mat-icon class="text-red-500 mr-3">error_outline</mat-icon>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Nouvelles</p>
+          <p class="text-2xl font-bold">{{ stats.nouveau }}</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="p-4 border-l-4 border-orange-400 shadow-sm hover:shadow-md transition">
+      <div class="flex items-center">
+        <mat-icon class="text-orange-400 mr-3">pending</mat-icon>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wide">En cours</p>
+          <p class="text-2xl font-bold">{{ stats.enCours }}</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="p-4 border-l-4 border-green-500 shadow-sm hover:shadow-md transition">
+      <div class="flex items-center">
+        <mat-icon class="text-green-500 mr-3">check_circle</mat-icon>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Résolues</p>
+          <p class="text-2xl font-bold">{{ stats.resolue }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Liste -->
+  <mat-card class="shadow-sm">
+    <mat-card-header>
+      <mat-card-title class="text-lg flex items-center gap-2">
+        <mat-icon class="text-blue-900">list</mat-icon>
+        Mes réclamations récentes
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="claims.length === 0" class="text-center py-8 text-gray-500">
+        <mat-icon class="text-5xl w-full mb-2 text-gray-300">inbox</mat-icon>
+        <p>Aucune réclamation pour le moment</p>
+      </div>
+      <div *ngFor="let claim of claims.slice(0,5)"
+           class="flex items-center justify-between py-3 border-b last:border-0 hover:bg-gray-50 px-2 rounded transition">
+        <div>
+          <p class="font-medium text-gray-800">{{ claim.titre }}</p>
+          <p class="text-xs text-gray-400">{{ claim.dateCreation | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="px-2 py-0.5 rounded-full text-xs font-semibold" [class]="getStatusClass(claim.statut || '')">
+            {{ claim.statut }}
+          </span>
+          <button mat-icon-button [routerLink]="['/client/claims', claim.id]" class="text-blue-600 hover:text-blue-800">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,50 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <div class="flex items-center gap-2 mb-6">
+    <button mat-icon-button routerLink="/client/claims" class="text-blue-900">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <mat-icon class="text-blue-900">{{ isEdit ? 'edit' : 'add_circle' }}</mat-icon>
+      {{ isEdit ? 'Modifier' : 'Nouvelle' }} réclamation
+    </h1>
+  </div>
+
+  <mat-card class="max-w-2xl mx-auto p-6 shadow-lg rounded-2xl">
+    <form [formGroup]="claimForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="titre" placeholder="Titre de la réclamation">
+        <mat-error *ngIf="claimForm.get('titre')?.invalid && claimForm.get('titre')?.touched">
+          Titre requis (min 3 caractères)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="5" placeholder="Décrivez votre problème en détail..."></textarea>
+        <mat-error *ngIf="claimForm.get('description')?.invalid && claimForm.get('description')?.touched">
+          Description requise (min 10 caractères)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Priorité</mat-label>
+        <mat-select formControlName="priorite">
+          <mat-option *ngFor="let p of priorites" [value]="p">{{ p }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex gap-3 pt-4">
+        <button mat-raised-button color="primary" type="submit"
+                class="!bg-blue-900 !text-white hover:!bg-blue-800"
+                [disabled]="loading || claimForm.invalid">
+          <mat-icon class="mr-1">{{ isEdit ? 'save' : 'send' }}</mat-icon>
+          {{ loading ? 'Enregistrement...' : (isEdit ? 'Modifier' : 'Créer') }}
+        </button>
+        <button mat-stroked-button type="button" routerLink="/client/claims">
+          Annuler
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

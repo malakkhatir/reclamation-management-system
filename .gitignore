@@ -1,0 +1,34 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Angular / Node
+node_modules/
+.angular/
+dist/
+coverage/
+npm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Scratch
+untitled/

@@ -1,0 +1,25 @@
+<mat-toolbar color="primary" class="!bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-lg sticky top-0 z-50">
+  <div class="flex items-center gap-2">
+    <mat-icon>support_agent</mat-icon>
+    <span class="font-bold text-lg hidden sm:block">Réclamations Pro</span>
+  </div>
+
+  <span class="flex-1"></span>
+
+  <div class="flex items-center gap-2">
+    <button mat-button [routerLink]="getDashboardLink()" class="!text-white">
+      <mat-icon>dashboard</mat-icon>
+      <span class="hidden sm:inline">Dashboard</span>
+    </button>
+
+    <span class="text-sm hidden md:block text-blue-200">{{ (auth.getCurrentUser() | async)?.email }}</span>
+    <span class="text-xs bg-blue-700 px-2 py-0.5 rounded-full">
+      {{ (auth.getCurrentUser() | async)?.role }}
+    </span>
+
+    <button mat-button (click)="logout()" class="!text-white hover:!bg-blue-700/30">
+      <mat-icon>logout</mat-icon>
+      <span class="hidden sm:inline">Déconnexion</span>
+    </button>
+  </div>
+</mat-toolbar>

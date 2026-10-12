@@ -1,0 +1,77 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <div class="flex items-center gap-2 mb-6">
+    <button mat-icon-button (click)="goBack()" class="text-blue-900">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <mat-icon class="text-blue-900">description</mat-icon>
+      Détail de la réclamation
+    </h1>
+  </div>
+
+  <div *ngIf="loading" class="flex justify-center py-12">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-card class="max-w-3xl mx-auto shadow-lg rounded-2xl" *ngIf="!loading && claim">
+    <!-- En-tête -->
+    <mat-card-header class="border-b pb-4">
+      <div class="flex flex-wrap justify-between items-start w-full">
+        <div>
+          <mat-card-title class="text-xl font-bold text-gray-800">
+            #{{ claim.id }} - {{ claim.titre }}
+          </mat-card-title>
+          <mat-card-subtitle class="text-gray-500">
+            Créée le {{ claim.dateCreation | date:'dd/MM/yyyy HH:mm' }}
+          </mat-card-subtitle>
+        </div>
+        <div class="flex gap-2">
+          <span class="px-3 py-1 rounded-full text-sm font-semibold" [class]="getStatusClass(claim.statut || '')">
+            {{ claim.statut }}
+          </span>
+          <span class="px-3 py-1 rounded-full text-sm font-semibold" [class]="getPriorityClass(claim.priorite || '')">
+            {{ claim.priorite }}
+          </span>
+        </div>
+      </div>
+    </mat-card-header>
+
+    <!-- Contenu -->
+    <mat-card-content class="py-4 space-y-4">
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 uppercase">Description</h3>
+        <p class="text-gray-700 mt-1">{{ claim.description }}</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h3 class="text-sm font-semibold text-gray-500 uppercase">Client</h3>
+          <p class="text-gray-700">{{ claim.clientNom || 'Non spécifié' }}</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-500 uppercase">Agent</h3>
+          <p class="text-gray-700">{{ claim.agentNom || 'Non assigné' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="claim.dateModification" class="text-xs text-gray-400">
+        Dernière modification : {{ claim.dateModification | date:'dd/MM/yyyy HH:mm' }}
+      </div>
+    </mat-card-content>
+
+    <!-- Actions -->
+    <mat-card-actions class="border-t pt-4 flex gap-3">
+      <button mat-raised-button color="primary"
+              [routerLink]="['/client/claims', claim.id, 'edit']"
+              [disabled]="!canEdit()"
+              class="!bg-blue-900 !text-white hover:!bg-blue-800">
+        <mat-icon class="mr-1">edit</mat-icon>
+        Modifier
+      </button>
+      <button mat-stroked-button (click)="goBack()">
+        <mat-icon class="mr-1">arrow_back</mat-icon>
+        Retour
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
